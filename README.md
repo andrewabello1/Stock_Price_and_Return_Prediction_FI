@@ -1,70 +1,72 @@
-# 📈 Stock Price & Return Prediction with Linear Regression (NVDA)
+# Stock Price & Return Prediction (NVDA)
 
-This project explores the difference between predicting **stock prices** and predicting **stock returns** using NVIDIA (NVDA) historical data.
-
-The goal is to understand why price prediction can be misleading and why financial modeling should focus on returns instead.
+This project compares **stock price prediction** vs **stock return prediction** using linear regression on NVIDIA (NVDA) historical data.
 
 ---
 
-## 🚀 Project Overview
+## Overview
 
-In this notebook, I:
-
-- Downloaded NVDA historical data using `yfinance`
-- Created technical features using moving averages
-- Built two linear regression models:
-  - 📊 Price Prediction Model
-  - 📉 Return Prediction Model
-- Compared model performance and interpretation
-- Predicted the next-day return
+- Downloaded NVDA data using `yfinance`
+- Created technical features (moving averages)
+- Built two regression models:
+  - Predicting next-day **price**
+  - Predicting next-day **return**
+- Evaluated and compared performance
 
 ---
 
-## 📊 Part 1 — Price Prediction
+## Part 1 — Price Prediction
 
-### Features:
-- Close price
-- 5-day Moving Average (MA_5)
-- 10-day Moving Average (MA_10)
-- 20-day Moving Average (MA_20)
+**Features**
+- Close price  
+- MA_5  
+- MA_10  
+- MA_20  
 
-### Target:
-- Next-day closing price (`Close.shift(-1)`)
+**Target**
+- `Close.shift(-1)` (next-day price)
 
-### Result:
-- Very high R² (~0.97+)
+**Result**
+- R² ≈ 0.97  
 
-This high R² is misleading because stock prices are highly persistent.  
-The model mainly learns that tomorrow’s price is close to today’s price.
+High R² is misleading because stock prices are highly persistent.  
+The model mostly learns that tomorrow’s price is close to today’s price.
 
 ---
 
-## 📉 Part 2 — Return Prediction
+## Part 2 — Return Prediction
 
-### Return Definition:
-```python
-Return = Close.pct_change()
+**Return Definition**
+- `Close.pct_change()`
 
-### Features:
-- Today’s return
-- 5-day moving average of returns
-- 10-day moving average of returns
-- 20-day moving average of returns
+**Features**
+- Today’s return  
+- MA_5 (of returns)  
+- MA_10 (of returns)  
+- MA_20 (of returns)
 
-### Target:
-- Target = Return.shift(-1)
+**Target**
+- `Return.shift(-1)` (next-day return)
 
-### Result:
-- MAE ≈ 0.022
-- R² ≈ 0.01
+**Results**
+- MAE ≈ 0.022  
+- R² ≈ 0.01  
 
-The low R² is expected. Financial returns are noisy and difficult to predict.
-This reflects a more realistic modeling approach.
+Low R² reflects the realistic difficulty of predicting financial returns.
 
-### Libraries Used:
-- Python
-- pandas
-- numpy
-- scikit-learn
-- yfinance
-- matplotlib
+---
+
+## Tools
+
+- Python  
+- pandas  
+- numpy  
+- scikit-learn  
+- yfinance  
+
+---
+
+## Key Insight
+
+Price prediction can appear highly accurate due to persistence in price levels.  
+Return prediction provides a more realistic view of market predictability.
